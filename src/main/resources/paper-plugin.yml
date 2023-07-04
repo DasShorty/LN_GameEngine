@@ -1,0 +1,4 @@
+name: GameEngine
+version: 1.0
+main: com.laudynetwork.gameengine.GameEngine
+api-version: 1.20
