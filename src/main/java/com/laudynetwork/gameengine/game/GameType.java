@@ -1,7 +1,9 @@
 package com.laudynetwork.gameengine.game;
 
-public enum GameType {
+public record GameType(String id) {
 
-    MANHUNT
-
+    @Override
+    public String toString() {
+        return id;
+    }
 }

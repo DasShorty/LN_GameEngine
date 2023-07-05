@@ -45,7 +45,7 @@ public class GameEngine extends JavaPlugin {
         this.msgCache.loadFileInCache(this.getResource("translations/plugins/de.json"), "de");
         this.msgCache.loadFileInCache(this.getResource("translations/plugins/en.json"), "en");
 
-        subCommandHandler.registerSubCommand(new GameCommand());
+        subCommandHandler.registerSubCommand(new GameCommand(dataHandler));
 
 
     }
