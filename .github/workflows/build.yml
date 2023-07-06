@@ -17,7 +17,7 @@ jobs:
             distribution: zulu
       -   name: Build with Gradle
           run: |
-            chmod 777 ./gradlew
+            chmod 777 gradlew
             ./gradlew build
           env:
             NEXUS_USER: ${{ secrets.NEXUS_USER }}
@@ -74,7 +74,9 @@ jobs:
             java-version: 17
             distribution: zulu
       -   name: Publish to Nexus
-          run: ./gradlew publish
+          run: |
+            chmod 777 gradlew
+            ./gradlew publish
           env:
             NEXUS_USER: ${{ secrets.NEXUS_USER }}
             NEXUS_PWD: ${{ secrets.NEXUS_PWD }}
