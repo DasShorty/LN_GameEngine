@@ -131,4 +131,13 @@ publishing {
             from(components["java"])
         }
     }
+    repositories {
+        maven {
+            url = uri("https://repo.laudynetwork.com/repository/maven")
+            credentials {
+                username = System.getenv("NEXUS_USER")
+                password = System.getenv("NEXUS_PWD")
+            }
+        }
+    }
 }
