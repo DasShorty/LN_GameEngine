@@ -17,7 +17,7 @@ jobs:
             distribution: zulu
       -   name: Build with Gradle
           run: |
-            chmod 777 gradlew
+            chmod 777 ./gradlew
             ./gradlew build
           env:
             NEXUS_USER: ${{ secrets.NEXUS_USER }}
