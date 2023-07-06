@@ -4,6 +4,7 @@ plugins {
     `java-library`
     id("io.papermc.paperweight.userdev") version "1.5.5"
     id("com.github.johnrengelman.shadow") version ("8.1.1")
+    id("maven-publish")
 }
 
 group = "com.laudynetwork.gameengine"
@@ -117,4 +118,17 @@ fun downloadLink(token: String): Map<String, String> {
     map["https://tolgee.laudynetwork.com/v2/projects/export?languages=en&$params&ak=$token"] = "en"
     map["https://tolgee.laudynetwork.com/v2/projects/export?languages=de&$params&ak=$token"] = "de"
     return map
+}
+
+// publish to nexus
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = "com.laudynetwork"
+            artifactId = "gameengine"
+            version = "latest"
+
+            from(components["java"])
+        }
+    }
 }
