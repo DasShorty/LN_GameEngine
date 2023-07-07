@@ -1,6 +1,7 @@
 package com.laudynetwork.gameengine;
 
 import com.laudynetwork.gameengine.command.GameCommand;
+import com.laudynetwork.gameengine.command.StartCommand;
 import com.laudynetwork.gameengine.game.backend.GameDataHandler;
 import com.laudynetwork.networkutils.api.messanger.backend.MessageCache;
 import com.laudynetwork.networkutils.essentials.control.api.ControlSubCommandHandler;
@@ -46,7 +47,6 @@ public class GameEngine extends JavaPlugin {
         this.msgCache.loadFileInCache(this.getResource("translations/plugins/en.json"), "en");
 
         subCommandHandler.registerSubCommand(new GameCommand(dataHandler));
-
 
     }
 
