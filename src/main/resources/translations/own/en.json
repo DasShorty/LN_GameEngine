@@ -1,4 +1,0 @@
-{
-  "command.control.game-engine.created" : "The game <id> has been created succesfully",
-  "command.control.game-engine.exist" : "The game with the specified id <id> already exist!"
-}
