@@ -15,6 +15,7 @@ public abstract class Game implements Listener {
     protected final GameType type;
     protected final int maxPlayers;
     protected final int minPlayers;
+    protected final GameTeamHandler teamHandler;
     private final GameDataHandler dataHandler;
 
     public Game(GameType type, int maxPlayers, int minPlayers) {
@@ -22,6 +23,7 @@ public abstract class Game implements Listener {
         this.maxPlayers = maxPlayers;
         this.minPlayers = minPlayers;
         this.dataHandler = Bukkit.getServicesManager().getRegistration(GameDataHandler.class).getProvider();
+        this.teamHandler = new GameTeamHandler();
         saveGame();
     }
 
