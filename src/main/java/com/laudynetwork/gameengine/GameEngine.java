@@ -10,6 +10,7 @@ import lombok.val;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
+
 @Getter
 public class GameEngine extends JavaPlugin {
 
@@ -47,6 +48,8 @@ public class GameEngine extends JavaPlugin {
         this.msgCache.loadFileInCache(this.getResource("translations/plugins/en.json"), "en");
 
         subCommandHandler.registerSubCommand(new GameCommand(dataHandler));
+
+        getCommand("start").setExecutor(new StartCommand());
 
     }
 
