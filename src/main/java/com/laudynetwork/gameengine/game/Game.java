@@ -3,6 +3,7 @@ package com.laudynetwork.gameengine.game;
 import com.laudynetwork.gameengine.game.backend.GameDataHandler;
 import com.laudynetwork.gameengine.game.gamestate.GameState;
 import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,6 +18,8 @@ public abstract class Game implements Listener {
     protected final int minPlayers;
     protected final GameTeamHandler teamHandler;
     private final GameDataHandler dataHandler;
+    @Setter
+    private GameState currentState;
 
     public Game(GameType type, int maxPlayers, int minPlayers) {
         this.type = type;
@@ -24,6 +27,7 @@ public abstract class Game implements Listener {
         this.minPlayers = minPlayers;
         this.dataHandler = Bukkit.getServicesManager().getRegistration(GameDataHandler.class).getProvider();
         this.teamHandler = new GameTeamHandler();
+        this.currentState = GameState.WAITING;
         saveGame();
     }
 
