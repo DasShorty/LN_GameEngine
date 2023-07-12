@@ -1,5 +1,6 @@
 package com.laudynetwork.gameengine;
 
+import com.laudynetwork.gameengine.api.animation.AnimationController;
 import com.laudynetwork.gameengine.command.GameCommand;
 import com.laudynetwork.gameengine.command.StartCommand;
 import com.laudynetwork.gameengine.game.backend.GameDataHandler;
@@ -38,6 +39,10 @@ public class GameEngine extends JavaPlugin {
                 "               |___/              \n");
         val dataHandler = new GameDataHandler();
         Bukkit.getServicesManager().register(GameDataHandler.class, dataHandler, this, ServicePriority.Normal);
+
+        val animationController = new AnimationController();
+        Bukkit.getServicesManager().register(AnimationController.class, animationController, this, ServicePriority.Normal);
+
 
         val subCommandHandler = Bukkit.getServicesManager().getRegistration(ControlSubCommandHandler.class).getProvider();
 
