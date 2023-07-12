@@ -16,7 +16,7 @@ public abstract class ActionBarAnimation {
 
     public abstract Component onRender();
 
-    public abstract List<Player> sendTo();
+    public abstract List<? extends Player> sendTo();
 
     private void run(long delay, long period) {
         Bukkit.getScheduler().runTaskTimerAsynchronously(GameEngine.getINSTANCE(), () -> {
