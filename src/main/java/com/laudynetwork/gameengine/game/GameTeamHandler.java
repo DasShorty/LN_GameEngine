@@ -15,7 +15,7 @@ public class GameTeamHandler {
     private final Map<String, Team> gameTeams = new HashMap<>();
 
     public void team(String id, Scoreboard scoreboard, Component prefix, Component suffix, NamedTextColor color) {
-        var entryTeam = scoreboard.getEntryTeam(id);
+        var entryTeam = scoreboard.getTeam(id);
         if (entryTeam == null)
             entryTeam = scoreboard.registerNewTeam(id);
 
