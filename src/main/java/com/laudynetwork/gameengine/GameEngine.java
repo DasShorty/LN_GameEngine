@@ -1,6 +1,7 @@
 package com.laudynetwork.gameengine;
 
 import com.laudynetwork.gameengine.api.animation.AnimationController;
+import com.laudynetwork.gameengine.api.listener.GameListeners;
 import com.laudynetwork.gameengine.command.GameCommand;
 import com.laudynetwork.gameengine.command.StartCommand;
 import com.laudynetwork.gameengine.game.backend.GameDataHandler;
@@ -55,6 +56,8 @@ public class GameEngine extends JavaPlugin {
         subCommandHandler.registerSubCommand(new GameCommand(dataHandler));
 
         getCommand("start").setExecutor(new StartCommand());
+
+        val gameListeners = new GameListeners();
 
     }
 
