@@ -5,19 +5,30 @@ import com.laudynetwork.gameengine.api.animation.Animation;
 import lombok.val;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.scheduler.BukkitTask;
 
 public abstract class ActionBarAnimation extends Animation {
+
+    private BukkitTask task;
 
     public ActionBarAnimation(long delay, long period) {
         super(delay, period);
     }
 
+    @Override
+    protected void cancel() {
+        if (task == null)
+            return;
+        if (task.isCancelled())
+            return;
+        task.cancel();
+    }
 
     public abstract Component onRender();
 
     @Override
     public void run(long delay, long period) {
-        Bukkit.getScheduler().runTaskTimerAsynchronously(GameEngine.getINSTANCE(), () -> {
+        task = Bukkit.getScheduler().runTaskTimerAsynchronously(GameEngine.getINSTANCE(), () -> {
             val component = onRender();
             sendTo().forEach(player -> player.sendActionBar(component));
         }, delay, period);

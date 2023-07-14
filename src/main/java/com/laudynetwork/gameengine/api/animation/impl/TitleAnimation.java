@@ -6,8 +6,12 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
 import net.kyori.adventure.title.TitlePart;
 import org.bukkit.Bukkit;
+import org.bukkit.scheduler.BukkitTask;
 
 public abstract class TitleAnimation extends Animation {
+
+    private BukkitTask task;
+
     public TitleAnimation(long delay, long period) {
         super(delay, period);
     }
@@ -16,11 +20,20 @@ public abstract class TitleAnimation extends Animation {
 
     public abstract Component title();
 
+    @Override
+    protected void cancel() {
+        if (task == null)
+            return;
+        if (task.isCancelled())
+            return;
+        task.cancel();
+    }
+
     public abstract Component subTitle();
 
     @Override
     protected void run(long delay, long period) {
-        Bukkit.getScheduler().runTaskTimerAsynchronously(GameEngine.getINSTANCE(), () -> sendTo().forEach(player -> {
+        task = Bukkit.getScheduler().runTaskTimerAsynchronously(GameEngine.getINSTANCE(), () -> sendTo().forEach(player -> {
             player.sendTitlePart(TitlePart.TIMES, times());
             player.sendTitlePart(TitlePart.TITLE, title());
             player.sendTitlePart(TitlePart.SUBTITLE, subTitle());

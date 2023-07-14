@@ -11,9 +11,9 @@ public abstract class Animation {
         run(delay, period);
     }
 
-
     public abstract List<? extends Player> sendTo();
 
     protected abstract void run(long delay, long period);
+    protected abstract void cancel();
 
 }
