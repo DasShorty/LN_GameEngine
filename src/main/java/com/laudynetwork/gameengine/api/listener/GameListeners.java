@@ -22,7 +22,12 @@ public class GameListeners implements Listener {
     }
 
     public static <E extends Event> void listen(Class<E> clazz, EventPriority priority, boolean ignoreCancelled, Consumer<E> onEvent) {
-        Bukkit.getPluginManager().registerEvent(clazz, INSTANCE, priority, (listener, event) -> onEvent.accept((E) event), GameEngine.getINSTANCE(), ignoreCancelled);
+        Bukkit.getPluginManager().registerEvent(clazz, INSTANCE, priority, (listener, event) -> {
+
+            if (event.getClass().isInstance(event) && event.getClass().getName().equals(clazz.getName()))
+                onEvent.accept((E) event);
+
+        }, GameEngine.getINSTANCE(), ignoreCancelled);
     }
 
 }
