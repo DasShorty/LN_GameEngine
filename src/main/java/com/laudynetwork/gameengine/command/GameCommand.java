@@ -36,37 +36,31 @@ public class GameCommand implements ControlSubCommand {
             return;
         }
 
-        switch (args[1].toLowerCase()) {
+        // control game-engine
+        if (args[1].toLowerCase().equals("create")) {// control game-engine create <game> <min> <max>
 
-            // control game-engine
-
-            case "create" -> {
-                // control game-engine create <game> <min> <max>
-
-                if (args.length == 4) {
-                    player.sendMessage(this.msgApi.getMessage(language, "command.usage",
-                            Placeholder.unparsed("command", "/control game-engine create <game> <min> <max>")));
-                    return;
-                }
-
-                val gameId = args[2];
-                val minPlayers = toInt(args[3], unused -> player.sendMessage(this.msgApi.getMessage(language, "object.format.int",
-                        Placeholder.unparsed("usage", "min"),
-                        Placeholder.unparsed("fallback", "1"))));
-                val maxPlayers = toInt(args[4], unused -> player.sendMessage(this.msgApi.getMessage(language, "object.format.int",
-                        Placeholder.unparsed("usage", "max"),
-                        Placeholder.unparsed("fallback", "1"))));
-
-                val data = this.handler.createData(gameId, minPlayers, maxPlayers);
-
-                if (data == null) {
-                    player.sendMessage(this.msgApi.getMessage(language, "command.control.game-engine.exist", Placeholder.unparsed("id", gameId)));
-                    return;
-                }
-
-                player.sendMessage(this.msgApi.getMessage(language, "command.control.game-engine.created", Placeholder.unparsed("id", gameId)));
-
+            if (args.length == 4) {
+                player.sendMessage(this.msgApi.getMessage(language, "command.usage",
+                        Placeholder.unparsed("command", "/control game-engine create <game> <min> <max>")));
+                return;
             }
+
+            val gameId = args[2];
+            val minPlayers = toInt(args[3], unused -> player.sendMessage(this.msgApi.getMessage(language, "object.format.int",
+                    Placeholder.unparsed("usage", "min"),
+                    Placeholder.unparsed("fallback", "1"))));
+            val maxPlayers = toInt(args[4], unused -> player.sendMessage(this.msgApi.getMessage(language, "object.format.int",
+                    Placeholder.unparsed("usage", "max"),
+                    Placeholder.unparsed("fallback", "1"))));
+
+            val data = this.handler.createData(gameId, minPlayers, maxPlayers);
+
+            if (data == null) {
+                player.sendMessage(this.msgApi.getMessage(language, "command.control.game-engine.exist", Placeholder.unparsed("id", gameId)));
+                return;
+            }
+
+            player.sendMessage(this.msgApi.getMessage(language, "command.control.game-engine.created", Placeholder.unparsed("id", gameId)));
         }
 
     }
@@ -91,24 +85,18 @@ public class GameCommand implements ControlSubCommand {
                 list.add("create");
             }
             case 3 -> {
-                switch (args[1].toLowerCase()) {
-                    case "create" -> {
-                        list.add("<gameId>");
-                    }
+                if (args[1].toLowerCase().equals("create")) {
+                    list.add("<gameId>");
                 }
             }
             case 4 -> {
-                switch (args[1].toLowerCase()) {
-                    case "create" -> {
-                        list.add("<min-player-slots>");
-                    }
+                if (args[1].toLowerCase().equals("create")) {
+                    list.add("<min-player-slots>");
                 }
             }
             case 5 -> {
-                switch (args[1].toLowerCase()) {
-                    case "create" -> {
-                        list.add("<max-player-slots>");
-                    }
+                if (args[1].toLowerCase().equals("create")) {
+                    list.add("<max-player-slots>");
                 }
             }
             default -> list.add("(no data)");

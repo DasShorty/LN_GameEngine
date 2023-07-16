@@ -2,9 +2,9 @@ package com.laudynetwork.gameengine.api.animation.impl;
 
 import com.laudynetwork.gameengine.GameEngine;
 import com.laudynetwork.gameengine.api.animation.Animation;
-import lombok.val;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 
 public abstract class ActionBarAnimation extends Animation {
@@ -16,7 +16,7 @@ public abstract class ActionBarAnimation extends Animation {
     }
 
     @Override
-    protected void cancel() {
+    public void cancel() {
         if (task == null)
             return;
         if (task.isCancelled())
@@ -24,13 +24,13 @@ public abstract class ActionBarAnimation extends Animation {
         task.cancel();
     }
 
-    public abstract Component onRender();
+    public abstract Component onRender(Player player);
 
     @Override
     public void run(long delay, long period) {
         task = Bukkit.getScheduler().runTaskTimerAsynchronously(GameEngine.getINSTANCE(), () -> {
-            val component = onRender();
-            sendTo().forEach(player -> player.sendActionBar(component));
+            onTick();
+            sendTo().forEach(player -> player.sendActionBar(onRender(player)));
         }, delay, period);
     }
 }

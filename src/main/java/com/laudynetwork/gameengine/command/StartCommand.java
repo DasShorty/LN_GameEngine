@@ -2,6 +2,7 @@ package com.laudynetwork.gameengine.command;
 
 import com.laudynetwork.gameengine.GameEngine;
 import com.laudynetwork.gameengine.game.Game;
+import com.laudynetwork.gameengine.game.gamestate.GameState;
 import com.laudynetwork.networkutils.api.MongoDatabase;
 import com.laudynetwork.networkutils.api.messanger.api.MessageAPI;
 import com.laudynetwork.networkutils.api.player.NetworkPlayer;
@@ -51,10 +52,12 @@ public class StartCommand implements CommandExecutor {
             return true;
         }
 
-        if (!this.game.onStart()) {
+        if (!this.game.phaseRequirement(GameState.STARTING)) {
             player.sendMessage(this.msgApi.getMessage(language, "command.start.game.null", Placeholder.unparsed("error", "Game#START")));
             return true;
         }
+
+        this.game.loadPhase(GameState.STARTING);
 
         player.sendMessage(this.msgApi.getMessage(language, "command.start.game"));
         return true;

@@ -2,22 +2,24 @@ package com.laudynetwork.gameengine.game;
 
 import com.laudynetwork.gameengine.game.backend.GameDataHandler;
 import com.laudynetwork.gameengine.game.gamestate.GameState;
+import com.laudynetwork.gameengine.game.phase.GamePhase;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.val;
 import org.bukkit.Bukkit;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Getter
-public abstract class Game implements Listener {
+public abstract class Game {
 
     protected final GameType type;
     protected final int maxPlayers;
     protected final int minPlayers;
     protected final GameTeamHandler gameTeamHandler;
     private final GameDataHandler dataHandler;
+    private final Map<GameState, GamePhase> gamePhases = new HashMap<>();
     @Setter
     private GameState currentState;
 
@@ -31,30 +33,39 @@ public abstract class Game implements Listener {
         saveGame();
     }
 
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
-        onJoin(event);
-    }
-
-    @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent event) {
-        onQuit(event);
-    }
-
     private void saveGame() {
         this.dataHandler.createData(type.id(), minPlayers, maxPlayers);
+    }
+
+    public boolean phaseRequirement(GameState state) {
+        if (!this.gamePhases.containsKey(state))
+            return false;
+
+        return this.gamePhases.get(state).requirement();
+    }
+
+    protected void registerPhase(GamePhase phase) {
+        this.gamePhases.put(phase.state(), phase);
+    }
+
+    public void loadPhase(GameState state) {
+        if (!this.gamePhases.containsKey(state))
+            return;
+
+        if (state != GameState.WAITING)
+            if (this.gamePhases.containsKey(state))
+                this.gamePhases.get(GameState.before(state)).onStop();
+
+        val gamePhase = this.gamePhases.get(state);
+        if (gamePhase.requirement())
+            gamePhase.onStart();
     }
 
     public abstract void onGameStateChange(GameState newState, GameState oldState);
 
     public abstract boolean onLoad();
 
-    public abstract boolean onStart();
-
     public abstract boolean onStop();
 
-    public abstract void onJoin(PlayerJoinEvent event);
-
-    public abstract void onQuit(PlayerQuitEvent event);
 
 }

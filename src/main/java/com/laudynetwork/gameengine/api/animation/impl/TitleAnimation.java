@@ -21,7 +21,7 @@ public abstract class TitleAnimation extends Animation {
     public abstract Component title();
 
     @Override
-    protected void cancel() {
+    public void cancel() {
         if (task == null)
             return;
         if (task.isCancelled())
@@ -33,10 +33,14 @@ public abstract class TitleAnimation extends Animation {
 
     @Override
     protected void run(long delay, long period) {
-        task = Bukkit.getScheduler().runTaskTimerAsynchronously(GameEngine.getINSTANCE(), () -> sendTo().forEach(player -> {
-            player.sendTitlePart(TitlePart.TIMES, times());
-            player.sendTitlePart(TitlePart.TITLE, title());
-            player.sendTitlePart(TitlePart.SUBTITLE, subTitle());
-        }), delay, period);
+        task = Bukkit.getScheduler().runTaskTimerAsynchronously(GameEngine.getINSTANCE(), () -> {
+            onTick();
+            sendTo().forEach(player -> {
+
+                player.sendTitlePart(TitlePart.TIMES, times());
+                player.sendTitlePart(TitlePart.TITLE, title());
+                player.sendTitlePart(TitlePart.SUBTITLE, subTitle());
+            });
+        }, delay, period);
     }
 }
