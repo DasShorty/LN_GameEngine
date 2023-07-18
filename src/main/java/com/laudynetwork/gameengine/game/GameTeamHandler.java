@@ -22,6 +22,7 @@ public class GameTeamHandler {
         entryTeam.prefix(prefix);
         entryTeam.suffix(suffix);
         entryTeam.color(color);
+        entryTeam.setCanSeeFriendlyInvisibles(true);
 
         this.gameTeams.put(id, entryTeam);
     }
