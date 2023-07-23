@@ -31,10 +31,12 @@ repositories {
 }
 
 dependencies {
-    implementation("org.projectlombok:lombok:1.18.28")
-    annotationProcessor("org.projectlombok:lombok:1.18.28")
+
+    // paper
 
     paperweight.paperDevBundle("1.20-R0.1-SNAPSHOT")
+
+    // LN provided api
 
     compileOnly("com.laudynetwork:networkutils:latest") {
         exclude(group = "eu.thesimplecloud.simplecloud", module = "simplecloud-api")
@@ -42,17 +44,15 @@ dependencies {
         exclude(group = "org.mongodb", module = "mongodb-driver-sync")
     }
 
-    compileOnly("org.mongodb:mongodb-driver-sync:4.10.2")
-//    compileOnly("com.laudynetwork:database:latest")
-    compileOnly("eu.thesimplecloud.simplecloud:simplecloud-api:2.5.0")
-    compileOnly("com.comphenix.protocol:ProtocolLib:5.0.0-SNAPSHOT")
+    // 3'trd layer api
 
-//    val scoreboardLibraryVersion = "2.0.0-RC9"
-//    implementation("com.github.MegavexNetwork.scoreboard-library:scoreboard-library-api:$scoreboardLibraryVersion")
-//    runtimeOnly("com.github.MegavexNetwork.scoreboard-library:scoreboard-library-packetevents:$scoreboardLibraryVersion")
+    compileOnly("org.mongodb:mongodb-driver-sync:4.10.2")
+    compileOnly("com.comphenix.protocol:ProtocolLib:5.0.0-SNAPSHOT")
+    implementation("org.projectlombok:lombok:1.18.28")
+    annotationProcessor("org.projectlombok:lombok:1.18.28")
 }
+
 tasks {
-    // Configure reobfJar to run when invoking the build task
     assemble {
         dependsOn(reobfJar)
     }
@@ -60,21 +60,11 @@ tasks {
     shadowJar {
         dependencies {
             exclude(dependency("com.comphenix.protocol:ProtocolLib:5.0.0-SNAPSHOT"))
-//            exclude(dependency("eu.thesimplecloud.simplecloud:simplecloud-api:2.5.0"))
-//            exclude(dependency("com.laudynetwork:networkutils:latest"))
-//            exclude(dependency("com.laudynetwork:database:latest"))
-//            exclude(dependency("dev.sergiferry:playernpc:2023.4"))
-//            exclude(dependency("eu.thesimplecloud.clientserverapi:clientserverapi:4.1.17"))
-//            exclude(dependency("eu.thesimplecloud.jsonlib:json-lib:1.0.10"))
-//            exclude(dependency("eu.thesimplecloud.simplecloud:simplecloud-runner:2.5.0"))
         }
     }
 
     compileJava {
         options.encoding = Charsets.UTF_8.name() // We want UTF-8 for everything
-
-        // Set the release flag. This configures what version bytecode the compiler will emit, as well as what JDK APIs are usable.
-        // See https://openjdk.java.net/jeps/247 for more information.
         options.release.set(17)
     }
     javadoc {
@@ -85,8 +75,6 @@ tasks {
     }
 
     reobfJar {
-        // This is an example of how you might change the output location for reobfJar. It's recommended not to do this
-        // for a variety of reasons, however it's asked frequently enough that an example of how to do it is included here.
         outputJar.set(layout.buildDirectory.file("dist/GameEngine.jar"))
     }
 }
