@@ -48,8 +48,8 @@ dependencies {
 
     compileOnly("org.mongodb:mongodb-driver-sync:4.10.2")
     compileOnly("com.comphenix.protocol:ProtocolLib:5.0.0-SNAPSHOT")
-    implementation("org.projectlombok:lombok:1.18.28")
-    annotationProcessor("org.projectlombok:lombok:1.18.28")
+    implementation("org.projectlombok:lombok:1.18.30")
+    annotationProcessor("org.projectlombok:lombok:1.18.30")
 }
 
 tasks {
