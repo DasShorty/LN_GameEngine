@@ -25,7 +25,7 @@ jobs:
             TOLGEE_TOKEN_PLUGIN: ${{ secrets.TOLGEE_TOKEN_PLUGIN }}
             TOLGEE_TOKEN_GENERAL: ${{ secrets.TOLGEE_TOKEN_GENERAL }}
       -   name: Upload Artifacts
-          uses: actions/upload-artifact@v3
+          uses: actions/upload-artifact@v4
           if: github.ref == 'refs/heads/main'
           with:
             name: data
