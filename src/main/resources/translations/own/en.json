@@ -1,0 +1,7 @@
+{
+  "command.control.game-engine.created" : "The game <id> has been created succesfully",
+  "command.control.game-engine.exist" : "The game with the specified id <id> already exist!",
+  "command.start.game" : "The game as been started!",
+  "command.start.game.null" : "Something went wrong with starting the game <error>",
+  "game.running" : "The game is already running!"
+}
